@@ -513,7 +513,7 @@ pcl::visualization::PCLVisualizer::addCoordinateSystem (double scale, int viewpo
   axes_data->GetPointData ()->SetScalars (axes_colors);
 
   vtkSmartPointer<vtkTubeFilter> axes_tubes = vtkSmartPointer<vtkTubeFilter>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   axes_tubes->SetInput (axes_data);
 #else
   axes_tubes->SetInputData (axes_data);
@@ -523,7 +523,7 @@ pcl::visualization::PCLVisualizer::addCoordinateSystem (double scale, int viewpo
 
   vtkSmartPointer<vtkPolyDataMapper> axes_mapper = vtkSmartPointer<vtkPolyDataMapper>::New ();
   axes_mapper->SetScalarModeToUsePointData ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   axes_mapper->SetInput (axes_tubes->GetOutput ());
 #else
   axes_mapper->SetInputConnection (axes_tubes->GetOutputPort ());
@@ -560,7 +560,7 @@ pcl::visualization::PCLVisualizer::addCoordinateSystem (double scale, float x, f
   axes_data->GetPointData ()->SetScalars (axes_colors);
 
   vtkSmartPointer<vtkTubeFilter> axes_tubes = vtkSmartPointer<vtkTubeFilter>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   axes_tubes->SetInput (axes_data);
 #else
   axes_tubes->SetInputData (axes_data);
@@ -570,7 +570,7 @@ pcl::visualization::PCLVisualizer::addCoordinateSystem (double scale, float x, f
 
   vtkSmartPointer<vtkPolyDataMapper> axes_mapper = vtkSmartPointer<vtkPolyDataMapper>::New ();
   axes_mapper->SetScalarModeToUsePointData ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   axes_mapper->SetInput (axes_tubes->GetOutput ());
 #else
   axes_mapper->SetInputConnection (axes_tubes->GetOutputPort ());
@@ -638,7 +638,7 @@ pcl::visualization::PCLVisualizer::addCoordinateSystem (double scale, const Eige
   axes_data->GetPointData ()->SetScalars (axes_colors);
 
   vtkSmartPointer<vtkTubeFilter> axes_tubes = vtkSmartPointer<vtkTubeFilter>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   axes_tubes->SetInput (axes_data);
 #else
   axes_tubes->SetInputData (axes_data);
@@ -648,7 +648,7 @@ pcl::visualization::PCLVisualizer::addCoordinateSystem (double scale, const Eige
 
   vtkSmartPointer<vtkPolyDataMapper> axes_mapper = vtkSmartPointer<vtkPolyDataMapper>::New ();
   axes_mapper->SetScalarModeToUsePointData ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   axes_mapper->SetInput (axes_tubes->GetOutput ());
 #else
   axes_mapper->SetInputConnection (axes_tubes->GetOutputPort ());
@@ -860,7 +860,7 @@ pcl::visualization::PCLVisualizer::addPointCloudPrincipalCurvatures (const pcl::
     line_1->SetPoint1 (cloud->points[i].x, cloud->points[i].y, cloud->points[i].z);
     line_1->SetPoint2 (p.x, p.y, p.z);
     line_1->Update ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
     polydata_1->AddInput (line_1->GetOutput ());
 #else
     polydata_1->AddInputData (line_1->GetOutput ());
@@ -891,7 +891,7 @@ pcl::visualization::PCLVisualizer::addPointCloudPrincipalCurvatures (const pcl::
     line_2->SetPoint1 (cloud->points[i].x, cloud->points[i].y, cloud->points[i].z);
     line_2->SetPoint2 (p.x, p.y, p.z);
     line_2->Update ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
     polydata_2->AddInput (line_2->GetOutput ());
 #else
     polydata_2->AddInputData (line_2->GetOutput ());
@@ -905,7 +905,7 @@ pcl::visualization::PCLVisualizer::addPointCloudPrincipalCurvatures (const pcl::
 
   // Assemble the two sets of lines
   vtkSmartPointer<vtkAppendPolyData> alldata = vtkSmartPointer<vtkAppendPolyData>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   alldata->AddInput (line_1_data);
   alldata->AddInput (line_2_data);
 #else
@@ -1133,7 +1133,7 @@ pcl::visualization::PCLVisualizer::createActorFromVTKDataSet (const vtkSmartPoin
   else
   {
     vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
     mapper->SetInput (data);
 #else
     mapper->SetInputData (data);
@@ -1211,7 +1211,7 @@ pcl::visualization::PCLVisualizer::createActorFromVTKDataSet (const vtkSmartPoin
   else
   {
     vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
     mapper->SetInput (data);
 #else
     mapper->SetInputData (data);
@@ -1595,7 +1595,7 @@ pcl::visualization::PCLVisualizer::setShapeRenderingProperties (
           {
             PCL_INFO ("[pcl::visualization::PCLVisualizer::setShapeRenderingProperties] Normals do not exist in the dataset, but Gouraud shading was requested. Estimating normals...\n");
             vtkSmartPointer<vtkPolyDataNormals> normals = vtkSmartPointer<vtkPolyDataNormals>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
             normals->SetInput (actor->GetMapper ()->GetInput ());
             vtkDataSetMapper::SafeDownCast (actor->GetMapper ())->SetInput (normals->GetOutput ());
 #else
@@ -1612,7 +1612,7 @@ pcl::visualization::PCLVisualizer::setShapeRenderingProperties (
           {
             PCL_INFO ("[pcl::visualization::PCLVisualizer::setShapeRenderingProperties] Normals do not exist in the dataset, but Phong shading was requested. Estimating normals...\n");
             vtkSmartPointer<vtkPolyDataNormals> normals = vtkSmartPointer<vtkPolyDataNormals>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
             normals->SetInput (actor->GetMapper ()->GetInput ());
             vtkDataSetMapper::SafeDownCast (actor->GetMapper ())->SetInput (normals->GetOutput ());
 #else
@@ -2336,7 +2336,7 @@ pcl::visualization::PCLVisualizer::addModelFromPolyData (
 
   vtkSmartPointer <vtkTransformFilter> trans_filter = vtkSmartPointer<vtkTransformFilter>::New ();
   trans_filter->SetTransform (transform);
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   trans_filter->SetInput (polydata);
 #else
   trans_filter->SetInputData (polydata);
@@ -2833,7 +2833,7 @@ pcl::visualization::PCLVisualizer::updateColorHandlerIndex (const std::string &i
     vtkPolyDataMapper* mapper = static_cast<vtkPolyDataMapper*>(am_it->second.actor->GetMapper ());
     mapper->SetScalarRange (minmax);
     mapper->SetScalarModeToUsePointData ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
     mapper->SetInput (data);
 #else
     mapper->SetInputData (data);
@@ -3120,7 +3120,7 @@ pcl::visualization::PCLVisualizer::addPolylineFromPolygonMesh (
 
   // Setup actor and mapper
   vtkSmartPointer < vtkPolyDataMapper > mapper = vtkSmartPointer<vtkPolyDataMapper>::New ();
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   mapper->SetInput (polyData);
 #else
   mapper->SetInputData (polyData);
@@ -3265,7 +3265,7 @@ pcl::visualization::PCLVisualizer::renderViewTesselatedSphere (
 
   vtkSmartPointer<vtkTransformFilter> trans_filter_center = vtkSmartPointer<vtkTransformFilter>::New ();
   trans_filter_center->SetTransform (trans_center);
-#if VTK_MAJOR_VERSION <= 5
+#if VTK_MAJOR_VERSION < 6
   trans_filter_center->SetInput (polydata);
 #else
   trans_filter_center->SetInputData (polydata);
