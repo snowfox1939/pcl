@@ -283,10 +283,16 @@ find_package(Qhull)
 # Cuda
 include(${PCL_SOURCE_DIR}/cmake/pcl_find_cuda.cmake)
 
-find_package(Qt4)
-if (QT4_FOUND)
-  include(${QT_USE_FILE})
-endif (QT4_FOUND)
+# Find Qt5
+include(cmake/pcl_find_qt5.cmake)
+ 
+# Find QT4
+if(NOT QT5_FOUND)
+  find_package(Qt4)
+  if (QT4_FOUND)
+    include(${QT_USE_FILE})
+  endif (QT4_FOUND)
+endif()
 
 # Find VTK
 find_package(VTK)
